@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap-enc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soap-env="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://localhost/feladat1/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://localhost/feladat1/soap/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://localhost/feladat1/soap/">
+      <xsd:complexType name="Huzas">
+        <xsd:all>
+          <xsd:element name="ev" type="xsd:int" minOccurs="0" maxOccurs="1"/>
+          <xsd:element name="het" type="xsd:int" minOccurs="0" maxOccurs="1"/>
+          <xsd:element name="nyeremenyek" type="tns:NyeremenyArray" minOccurs="0" maxOccurs="1"/>
+          <xsd:element name="huzottak" type="tns:HuzottArray" minOccurs="0" maxOccurs="1"/>
+          <xsd:element name="hibakod" type="xsd:int" minOccurs="0" maxOccurs="1"/>
+          <xsd:element name="uzenet" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="Nyeremeny">
+        <xsd:all>
+          <xsd:element name="talalat" type="xsd:int" minOccurs="0" maxOccurs="1"/>
+          <xsd:element name="darab" type="xsd:int" minOccurs="0" maxOccurs="1"/>
+          <xsd:element name="ertek" type="xsd:float" minOccurs="0" maxOccurs="1"/>
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="Huzott">
+        <xsd:all>
+          <xsd:element name="szam" type="xsd:int" minOccurs="0" maxOccurs="1"/>
+        </xsd:all>
+      </xsd:complexType>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="getHuzasRequest">
+    <wsdl:part name="ev" type="xsd:int"/>
+    <wsdl:part name="het" type="xsd:int"/>
+  </wsdl:message>
+  <wsdl:message name="getHuzasResponse">
+    <wsdl:part name="getHuzasReturn" type="tns:Huzas"/>
+  </wsdl:message>
+  <wsdl:portType name="HuzasokPortType">
+    <wsdl:operation name="getHuzas">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:getHuzasRequest"/>
+      <wsdl:output message="tns:getHuzasResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="HuzasokBinding" type="tns:HuzasokPortType">
+    <soap-env:binding xmlns="http://schemas.xmlsoap.org/wsdl/soap/" style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="getHuzas">
+      <soap-env:operation xmlns="http://schemas.xmlsoap.org/wsdl/soap/" soapAction="http://localhost/feladat1/soap/szerver.php?method=getHuzas" style="rpc"/>
+      <wsdl:input>
+        <soap-env:body xmlns="http://schemas.xmlsoap.org/wsdl/soap/" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap-env:body xmlns="http://schemas.xmlsoap.org/wsdl/soap/" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Huzasok">
+    <wsdl:documentation/>
+    <wsdl:port name="HuzasokPort" binding="tns:HuzasokBinding">
+      <soap-env:address location="http://localhost/feladat1/soap/szerver.php"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
